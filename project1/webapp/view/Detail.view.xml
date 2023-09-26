@@ -1,0 +1,5 @@
+<mvc:View controllerName="project1.controller.Detail"
+xmlns:m="sap.m"
+	xmlns:mvc="sap.ui.core.mvc">
+    <m:Text text="detail view"></m:Text>
+</mvc:View>

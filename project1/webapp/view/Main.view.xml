@@ -1,0 +1,61 @@
+<mvc:View controllerName="project1.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+	xmlns="sap.m"
+	xmlns:f="sap.f"
+	xmlns:form="sap.ui.layout.form"    
+    >
+	<f:DynamicPage id="dynamicPageId"
+				   toggleHeaderOnTitleClick="false">
+		<!-- DynamicPage Title -->
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="Products"/>
+				</f:heading>
+			</f:DynamicPageTitle>
+		</f:title>
+
+		<!-- DynamicPage Content -->
+		<f:content>
+			<Table
+				id="productsTable"
+				mode="SingleSelectMaster"
+				itemPress="onListItemPress"
+				inset="false"
+				items="{
+					path: 'productModel>/',
+					sorter: {
+						path: 'ProductName'
+					}
+				}"
+				class="sapFDynamicPageAlignContent"
+				width="auto">
+				<headerToolbar>
+					<OverflowToolbar>
+						<ToolbarSpacer/>
+						<SearchField search="onSearch" width="17.5rem"/>
+                        <OverflowToolbarButton icon="sap-icon://sort" type="Transparent" press="onSort"/>
+
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column width="12em" hAlign="Center">
+						<Text text="Product" />
+					</Column>
+					<Column	hAlign="Center">
+						<Text text="Type" />
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem type="Navigation">
+						<cells>
+							<ObjectIdentifier title="{productModel>ProductName}" text="{productModel>ProductName}" />
+							<ObjectIdentifier title="{productModel>CategoryName}" text="{path: 'productModel>CategoryName'} " />
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</f:content>
+
+	</f:DynamicPage>
+</mvc:View>
