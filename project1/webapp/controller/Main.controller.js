@@ -9,7 +9,7 @@ sap.ui.define([
         /**
          * @param {typeof sap.ui.core.mvc.Controller} Controller
          */
-        function (Controller, JSONModel, Filter, FilterOperator, Sorter, Formatter) {
+        function (Controller, JSONModel, Filter, FilterOperator, Sorter) {
 
             "use strict";
     
@@ -57,13 +57,18 @@ sap.ui.define([
                     this.getView().byId("productsTable").getBinding("items").filter(aFilter, "Application");
                 },
                 onListItemPress: function (oEvent) {
+                    var oNextUIState = this.getOwnerComponent().getHelper().getNextUIState(1),
+                    productPath = oEvent.getSource().getSelectedItem().getBindingContext("productModel").getPath(),
+                    product = productPath.split("/").slice(-1).pop();
+                    this.oRouter.navTo("detail", {layout: oNextUIState.layout, product: product});
+                    
                     let oViewModel = new JSONModel({
-                        layout: "TwoColumnsMidExpanded"   
+                        layout: "TwoColumnsBeginExpanded"   
                       });
         
                       this.getOwnerComponent().setModel(oViewModel, "appView"); 
 
-                    // console.log(oViewModel);
+  
                 },
 
                 onSort: function (oEvent) {

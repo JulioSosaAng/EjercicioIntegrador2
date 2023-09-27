@@ -14,17 +14,6 @@
             "id": "@sap/generator-fiori:basic",
             "version": "1.11.0",
             "toolsId": "fb5ddbeb-86e2-4105-8075-994f0b506180"
-        },
-        "dataSources": {
-            "mainService": {
-                "uri": "/northwind/northwind.svc/",
-                "type": "OData",
-                "settings": {
-                    "annotations": [],
-                    "localUri": "localService/metadata.xml",
-                    "odataVersion": "2.0"
-                }
-            }
         }
     },
     "sap.ui": {
@@ -68,11 +57,6 @@
                 "settings": {
                     "bundleName": "project1.i18n.i18n"
                 }
-            },
-            "": {
-                "dataSource": "mainService",
-                "preload": true,
-                "settings": {}
             }
         },
         "resources": {
@@ -84,45 +68,62 @@
         },
         "routing": {
             "config": {
-                "routerClass": "sap.m.routing.Router",
-                "viewType": "XML",
-                "async": true,
-                "viewPath": "project1.view",
-                "controlAggregation": "pages",
-                "controlId": "app",
-                "clearControlAggregation": false
-            },
+				"routerClass": "sap.f.routing.Router",
+				"type": "View",
+				"viewType": "XML",
+				"path": "project1.view",
+				"controlId": "fcl",
+				"transition": "slide",
+				"async": true
+			},
             "routes": [
                 {
-                    "name": "RouteMain",
-                    "pattern": "",
+                    "name": "main",
+                    "pattern": ":layout:",
                     "target": [
-                        "TargetMain"
+                        "main"
                     ]
                 },
 				{
-					"pattern": "RouteDetail",
-					"name": "RouteDetail",
+					"pattern": "detail/{product}/{layout}",
+					"name": "detail",
 					"target": [
-						"TargetMain",
-						"TargetDetail"
+						"main",
+						"detail"
+					]
+				},
+				{
+					"pattern": "detailDetail/{product}/{supplier}/{layout}",
+					"name": "detailDetail",
+					"target": [
+						"main",
+						"detail",
+						"detailDetail"
 					]
 				}
             ],
             "targets": {
-                "TargetMain": {
+                "main": {
                     "viewType": "XML",
                     "transition": "slide",
-                    "clearControlAggregation": false,
-                    "viewId": "Main",
-                    "viewName": "Main"
+                    "viewId": "main",
+                    "viewName": "Main",
+                    "controlAggregation": "beginColumnPages"
                 },
-                "TargetDetail": {
+                "detail": {
                   "viewType": "XML",
                   "transition": "slide",
-                  "viewId": "Detail",
-                  "viewName": "Detail"
-                }
+                  "viewId": "detail",
+                  "viewName": "Detail",
+                  "controlAggregation": "midColumnPages"
+                },
+				"detailDetail": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "viewId": "detailDetail",
+                    "viewName": "DetailDetail",
+					"controlAggregation": "endColumnPages"
+				}
             }
         },
         "rootView": {
